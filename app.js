@@ -37,6 +37,8 @@ function setTab(t) {
 function render() {
   if (S.tab === 'lib') return renderLib();
   if (S.tab === 'hist') return renderHist();
+  if (S.tab === 'siam') return renderSiam();
+  if (S.tab === 'chart') return renderChart();
   if (S.step === 'setup') return renderSetup();
   if (S.step === 'pick') return renderPick();
   return renderReveal();
@@ -286,7 +288,7 @@ function renderLib() {
   const f = S.filter;
   const chips = [['all', 'ทั้งหมด'], ['major', 'ไพ่ใหญ่'], ...Object.entries(SUITS).map(([k, v]) => [k, v.th])];
   const list = DECK.filter(c => f === 'all' || (f === 'major' ? c.arcana === 'major' : c.suit === f));
-  $('#app').innerHTML = `<h1 class="screen">คลังไพ่</h1><p class="lead">ไพ่ครบ 78 ใบ แตะเพื่ออ่านความหมายหัวตั้งและกลับหัว</p><section class="panel">
+  $('#app').innerHTML = `<h1 class="screen">คลังไพ่</h1><p class="lead">ไพ่ครบ 78 ใบ ภาพจากสำรับพิมพ์ฟรีของ On Your Journey (onyourjourney.co.uk) แตะเพื่ออ่านความหมายหัวตั้งและกลับหัว</p><section class="panel">
     <div class="chips">${chips.map(([k, l]) => `<button class="${k === f ? 'on' : ''}" data-f="${k}" aria-pressed="${k === f}">${l}</button>`).join('')}</div>
     <div class="lib">${list.map(c => `<button class="lc" data-id="${c.id}"><img loading="lazy" src="${c.img}" alt="${esc(c.name)}"><span>${esc(c.name)}</span></button>`).join('')}</div></section>`;
   document.querySelectorAll('.chips button').forEach(b => b.onclick = () => { S.filter = b.dataset.f; renderLib(); });
@@ -334,4 +336,4 @@ document.addEventListener('keydown', e => {
 });
 
 document.querySelectorAll('.tabs button').forEach(b => b.onclick = () => setTab(b.dataset.t));
-render();
+
